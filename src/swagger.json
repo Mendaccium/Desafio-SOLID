@@ -1,0 +1,178 @@
+{
+    "openapi": "3.0.0",
+    "info":{
+        "title": "User API",
+        "description": "Desafio Introdução ao SOLID do IGNITE NodeJS",
+        "version": "1.0.0",
+        "contact": {
+            "email": "antunes.f@acad.ifma.edu.br"
+        }
+    },
+    "paths": {
+        "/users": {
+            "post": {
+                "tags": ["Users"],
+                "summary": "Create a user",
+                "description": "Create a new user",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    }
+                                },
+                                "example": {
+                                    "name": "User name sample",
+                                    "email": "User email sample"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "400": {
+                        "description": "User already exists"
+                    }
+                }
+            },
+            "get": {
+                "tags": ["Users"],
+                "summary": "List all users",
+                "description": "List all users only if the ```admin```",
+                "parameters":[
+                    {
+                        "in": "header",
+                        "name": "user_id",
+                        "type": "string",
+                        "format": "uuid",
+                        "required": "true",
+                        "description": "id of the User"
+                    }
+                ],
+                "responses": {
+                    "200":{
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema":{
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties":{
+                                            "name": {
+                                                "type": "string"
+                                            },
+                                            "email":{
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{user_id}":{
+            "get":{
+                "tags": ["Users"],
+                "summary": "Show User Profile",
+                "description": "Show User Profile by Id",
+                "parameters":[
+                    {
+                        "in": "path",
+                        "name": "user_id",
+                        "type": "string",
+                        "format": "uuid",
+                        "required": "true",
+                        "description": "id of the User"
+                    }
+                ],
+                "responses": {
+                    "201":{
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema":{
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties":{
+                                            "name": {
+                                                "type": "string"
+                                            },
+                                            "email":{
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "User not found"
+                    }
+
+                }
+            }
+        },
+        "/users/{user_id}/admin":{
+            "patch":{
+                "tags": ["Users"],
+                "summary": "Turn user admin",
+                "description": "Turn user in admin",
+                "parameters":[
+                    {
+                        "in": "path",
+                        "name": "user_id",
+                        "type": "string",
+                        "format": "uuid",
+                        "required": "true",
+                        "description": "id of the User"
+                    }
+                ],
+                "responses": {
+                    "201":{
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema":{
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties":{
+                                            "name": {
+                                                "type": "string"
+                                            },
+                                            "email":{
+                                                "type": "string"
+                                            },
+                                            "admin":{
+                                                "type": "boolean"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "User not found"
+                    }
+
+                }
+            }
+        }
+    }
+}
